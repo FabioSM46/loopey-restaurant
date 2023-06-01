@@ -14,3 +14,7 @@ nav{
 nav a {
     padding: 0 1rem;
 }
+
+li{
+  list-style: none;
+}
