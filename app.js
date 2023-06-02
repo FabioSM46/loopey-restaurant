@@ -46,8 +46,8 @@ app.get("/contact", (req, res, next) => {
   res.render("contact-page");
 });
 
-app.get("/pizzas/margherita", (req, res, next) => {
-  Pizza.findOne({ title: "Margherita" })
+app.get("/pizzas/:pizzaName", (req, res, next) => {
+  Pizza.findOne({ title: req.params.pizzaName })
     .then((pizzaFromDB) => {
       res.render("product", pizzaFromDB);
     })
@@ -56,33 +56,26 @@ app.get("/pizzas/margherita", (req, res, next) => {
     });
 });
 
-app.get("/pizzas/veggie", (req, res, next) => {
-  Pizza.findOne({ title: "Veggie" })
-    .then((pizzaFromDB) => {
-      res.render("product", pizzaFromDB);
+/////////// ROUTE PARAMS
+
+app.get("/drinks/:drinkName", (req, res, next) => {
+  //res.send(`display info about.....${req.params.drinkName}`);
+  Pizza.findOne({ recommendedDrink: req.params.drinkName })
+    .then((drinkFromDB) => {
+      res.render("drink", drinkFromDB);
     })
     .catch((err) => {
-      console.log("Error getting pizza from DB...", err);
+      console.log("Error getting drink from DB...", err);
     });
 });
 
-app.get("/pizzas/seafood", (req, res, next) => {
-  Pizza.findOne({ title: "Seafood" })
-    .then((pizzaFromDB) => {
-      res.render("product", pizzaFromDB);
+app.get("/pizzas", (req, res, next) => {
+  Pizza.find()
+    .then((pizzasArr) => {     
+      res.render("product-list", {pizzasArr});
     })
     .catch((err) => {
-      console.log("Error getting pizza from DB...", err);
-    });
-});
-
-app.get("/pizzas/hawaiian", (req, res, next) => {
-  Pizza.findOne({ title: "Hawaiian" })
-    .then((pizzaFromDB) => {
-      res.render("product", pizzaFromDB);
-    })
-    .catch((err) => {
-      console.log("Error getting pizza from DB...", err);
+      console.log("Error getting pizzas from DB...", err);
     });
 });
 
