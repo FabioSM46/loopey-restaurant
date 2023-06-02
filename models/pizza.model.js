@@ -8,8 +8,9 @@ const pizzaSchema = new mongoose.Schema({
   title: { type: String, required: true, unique: true },
   price: { type: Number, required: true },
   isVeggie: { type: Boolean, default: false },
+  recommendedDrink: { type: String, default: "Coca-Cola" },
   ingredients: { type: [String] },
-  dough: { type: String,default: 'thin' },
+  dough: { type: String, default: "thin" },
   imageFile: { type: String },
 });
 //create a model
