@@ -1,4 +1,22 @@
-    <h1>Welcome to our restaurant</h1>
-    <img src="/images/home.jpg" />
- 
+<h1>Welcome to our restaurant</h1>
+<img src="/images/home.jpg" />
+
+
+  <section>
+    <h3>Login:</h3>
+    <form method="post" action="/login">
+        <label>
+            Email:
+            <input type="email" name="email" required />
+        </label>
+        <label>
+            Password:
+            <input type="password" name="psw" required />
+        </label>
+        <button type="submit">Submit</button>
+    </form>
+</section>
+
+
+
 {{> ctaOrderNow}}

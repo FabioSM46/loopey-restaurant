@@ -5,7 +5,8 @@ const app = express();
 const mongoose = require("mongoose");
 const seeds = "bin/seeds.js";
 const { exec } = require("child_process");
-
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public")); //make everything inside public folder available
 app.set("views", __dirname + "/views"); //tells our Express app where to look for our views
 app.set("view engine", "hbs"); //sets HBS as the template engine
@@ -69,14 +70,35 @@ app.get("/drinks/:drinkName", (req, res, next) => {
     });
 });
 
+// GET /pizzas
 app.get("/pizzas", (req, res, next) => {
-  Pizza.find()
-    .then((pizzasArr) => {     
-      res.render("product-list", {pizzasArr});
+  let maximumPrice = req.query.maxPrice;
+  maximumPrice = Number(maximumPrice); //convert to a number
+
+  let filter = {};
+
+  if (maximumPrice) {
+    filter = { price: { $lte: maximumPrice } };
+  }
+
+  Pizza.find(filter)
+    .then((pizzasArr) => {
+      res.render("product-list", { pizzasArr });
     })
-    .catch((err) => {
-      console.log("Error getting pizzas from DB...", err);
-    });
+    .catch((e) => console.log("error getting pizzas from DB", e));
+});
+
+app.post("/login", (req, res, next) => {
+  console.log("login attempt");
+  console.log(req.body);
+  const email = req.body.email;
+  const psw = req.body.psw;
+
+  if (email === "fopea46@gmail.com" && psw === "asd") {
+    res.send("logged in!");
+  } else {
+    res.send("wrong credentials");
+  }
 });
 
 app.listen(80, () => {

@@ -1,9 +1,20 @@
 <h1>List of pizzas in our DB:</h1>
-
   {{#each pizzasArr}}
       <section class="pizza-summary">
-          <h2>{{this.title}}</h2>
+          <h2><a href="/pizzas/{{this.title}}">{{this.title}}</a></h2> 
           <h3>Price: {{this.price}}€</h3>
           <hr>
       </section>
+      {{else}}
+      <p class="empty">No content</p>
   {{/each}}
+
+  <section>
+    <form method="get" action="/pizzas?maxPrice=">
+        <label>
+            Max Price:
+            <input type="number" name="maxPrice" />
+        </label>
+        <button type="submit">Submit</button>
+    </form>
+</section>
